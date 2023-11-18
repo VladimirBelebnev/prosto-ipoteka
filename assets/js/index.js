@@ -410,6 +410,105 @@ const thxModal = document.getElementById("thx-modal");
 let buttonModalName = document.getElementById("name-input");
 let persentPerMonth = 11 / 100 / 12;
 
+let calculatorInputRange = document.querySelectorAll(
+    ".calculator-input__range"
+);
+$(".calculator-input__range").on("change input", function () {
+    $(this).parent().find($("input[name=values]")).val($(this).val()); //assign value..
+
+    let width = ($(this).val() / $(this).attr("max")) * 100 + "%";
+    let fill = $(this).parent().find(".range-fill");
+    if ($(this).val() == 1) {
+        fill.width(width);
+    } else {
+        fill.width(width);
+    }
+    console.log(this.value);
+});
+
+$(".calculator-input__sum").on("input", function () {
+    let value = $(this).val();
+    let n1 = value.replace(" ", "");
+    let n2 = n1.replace("  ", "");
+    let n3 = n2.replace(" ₽", "");
+    let n4 = n3.replace(" ", "");
+
+    if (isNaN(value)) {
+        value = 1;
+    }
+    if ($(this).val() === "") {
+        $(this).parent().find("input[type=range]").val(0);
+    } else {
+        $(this).parent().find("input[type=range]").attr("value", value);
+    }
+    if ($(this).parent().find("input[type=range]")) {
+        $(this).parent().find("input[type=range]").attr("value", n4);
+        let width =
+            (+$(this).parent().find("input[type=range]").attr("value") /
+                +$(this).attr("max")) *
+                100 +
+            "%";
+        let fill = $(this).parent().find(".range-fill");
+        if ($(this).val() == 1) {
+            fill.width(width);
+        } else {
+            fill.width(width);
+        }
+    }
+});
+
+$(":input").inputmask({
+    max: 25000000,
+});
+$("#phone-input").inputmask("+7 999 999-99-99");
+
+document.getElementById("month").oninput = function () {
+    let creditTime = document.getElementById("month").value * 12;
+    // let valueLine = (this.value - this.min) / (this.max - this.min) * 100
+    // this.style.background = 'linear-gradient(to right, #50DFB2 0%, #50DFB2 ' + valueLine + '%, #fff ' + valueLine + '%, white 100%)';
+    if (this.value <= 4 || (this.value >= 21 && this.value <= 24)) {
+        this.previousElementSibling.textContent = this.value + " год";
+        document.querySelector("#time").innerHTML = this.value + " год";
+    } else {
+        this.previousElementSibling.textContent = this.value + " лет";
+        document.querySelector("#time").innerHTML = this.value + " лет";
+    }
+    //sum on changing
+    document.getElementById("amount-1").textContent = Math.round(
+        Number(document.getElementById("price").value) *
+            (persentPerMonth +
+                persentPerMonth /
+                    (Math.pow(1 + persentPerMonth, creditTime) - 1))
+    );
+    document.getElementById("amount-1").textContent =
+        document
+            .getElementById("amount-1")
+            .textContent.replace(/(\d)(?=(\d{3})+$)/g, "$1 ") + "  ₽";
+};
+
+//range style for price
+document.getElementById("price").oninput = function () {
+    console.log(this.value);
+    let creditTime = document.getElementById("month").value * 12;
+    // this.style.background = 'linear-gradient(to right, #50DFB2 0%, #50DFB2 ' + valueLine + '%, #fff ' + valueLine + '%, white 100%)';
+    let amount = this.value.replace(/(\d)(?=(\d{3})+$)/g, "$1 ");
+    console.log(amount);
+    this.previousElementSibling.setAttribute("value", amount + " ₽");
+    console.log(this.value);
+    //sum on changing
+    document.getElementById("amount-1").textContent = Math.round(
+        Number(this.value) *
+            (persentPerMonth +
+                persentPerMonth /
+                    (Math.pow(1 + persentPerMonth, creditTime) - 1))
+    );
+    document.getElementById("amount-1").textContent =
+        document
+            .getElementById("amount-1")
+            .textContent.replace(/(\d)(?=(\d{3})+$)/g, "$1 ") + "  ₽";
+    document.querySelector("#sum").textContent = amount + "  ₽";
+};
+
 // //range style for price
 // document.getElementById("price").oninput = function () {
 //     console.log(this.value);
