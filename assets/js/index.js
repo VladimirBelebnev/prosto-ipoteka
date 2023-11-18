@@ -29,6 +29,9 @@ const homeSkipBtn = document.querySelector(".info-message__skip_home");
 const dropDownLinks = document.querySelectorAll(".drop-down-modal__link");
 const selectInputButtons = document.querySelectorAll(".select-input__open-section");
 const selectInputValues = document.querySelectorAll(".select-input__value");
+const modalOpenButton1 = document.querySelector(".home-two__info-item .home-two__btn");
+const modalOpenButton2 = document.querySelector(".side-panel__button");
+const modalOpenButton3 = document.querySelector(".application-form__submit-btn");
 
 // Tabs Variables
 
@@ -67,6 +70,20 @@ function hiddenModal(modal) {
 
 
 // Event Listeners
+
+// Modal Windows
+
+modalOpenButton1.addEventListener("click", () => {
+    const modal = Array.from(modalWindows).find(item => item.id == "modal-main");
+
+    modal.classList.remove("hidden");
+});
+
+modalOpenButton2.addEventListener("click", () => {
+    const modal = Array.from(modalWindows).find(item => item.id == "modal-direktor");
+
+    modal.classList.remove("hidden");
+});
 
 Array.from(dropDownLinks).forEach(item => {
     item.addEventListener("click", () => {
@@ -219,10 +236,13 @@ dropDownModalBtn?.addEventListener("click", (event) => {
     dropDownModal.classList.remove("hidden");
     event.preventDefault();
 });
+
 document.querySelector(".calculator__btn")?.addEventListener("click", () => {
     modalWindows.forEach(item => item.classList.add("hidden"));
     document.querySelector("#modal-main").classList.remove("hidden");
 });
+
+// Drop-downs
 
 Array.from(selectInputButtons).forEach(item => {
     item.addEventListener("click", () => {
@@ -251,12 +271,7 @@ Array.from(selectInputValues).forEach(item => {
     });
 });
 
-// dropDownModalBtn.addEventListener("click", (event) => {
-//     dropDownModal.classList.remove("hidden");
-//     event.preventDefault();
-// });
-
-// Slider Methods
+// Sliders Methods
 
 // let slidePerViewNum = 4;
 // let windowWidth = document.documentElement.offsetWidth;
@@ -399,6 +414,102 @@ Array.from(selectInputValues).forEach(item => {
 //     spaceBetween: 40,
 // });
 
+
+let slidePerViewNum = 4;
+let windowWidth = document.documentElement.offsetWidth;
+
+if (windowWidth < 1250 && windowWidth >= 1100) {
+    slidePerViewNum = 3;
+} else if (windowWidth < 1100 && windowWidth >= 900) {
+    slidePerViewNum = 2;
+} else if (windowWidth < 900) {
+    slidePerViewNum = 1;
+}
+
+if (windowWidth < 600) {
+    document
+        .querySelector(".achivements-1__items-wrapper")
+        .classList.add("swiper");
+    document
+        .querySelector(".achivements-1__items")
+        .classList.add("swiper-wrapper");
+    document
+        .querySelectorAll(".achivement")
+        .forEach((item) => item.classList.add("swiper-slide"));
+    document.querySelector(".companies__items-wrapper").classList.add("swiper");
+    document.querySelector(".companies__items").classList.add("swiper-wrapper");
+    document
+        .querySelectorAll(".companies__item-wrapper")
+        .forEach((item) => item.classList.add("swiper-slide"));
+
+    const swiperThree = new Swiper(".achivements-1__items-wrapper", {
+        slidesPerView: 1.3,
+        spaceBetween: 10,
+        direction: "horizontal",
+        // spaceBetween: 40,
+    });
+
+}
+
+const swiperOne = new Swiper(".certificates__slider", {
+    slidesPerView: 1,
+    direction: "horizontal",
+    loop: true,
+    // pagination: {
+    //     el: ".certificates__pagination",
+    //     clickable: true,
+
+    // },
+    autoplay: {
+        delay: 300,
+    },
+    //   effect: "fade",
+    breakpoints: {
+        600: {
+            slidesPerView: 3,
+            spaceBetween: 10,
+        },
+    },
+});
+document.querySelector(".tasks__items-wrapper").classList.add("swiper");
+    document.querySelector(".tasks__items").classList.add("swiper-wrapper");
+    document
+        .querySelectorAll(".task")
+        .forEach((item) => item.classList.add("swiper-slide"));
+
+const swiperFour = new Swiper(".tasks__items-wrapper", {
+    slidesPerView: 1,
+    direction: "horizontal",
+    spaceBetween: 40,
+    pagination: {
+        el: ".pag",
+        clickable: true,
+    },
+    breakpoints: {
+        1000: {
+            slidesPerView: 2,
+        },
+    },
+});
+
+const feedbackSlides = document.querySelectorAll(".feedback");
+const feedbackPagination = document.querySelector(".feedbacks__pagination");
+const feedbackWrapper = document.querySelector(".feedbacks__slider-wrapper");
+
+const swiperTwo = new Swiper(".feedbacks__slider", {
+    slidesPerView: 1,
+    direction: "horizontal",
+    centeredSlides: true,
+    pagination: {
+        el: ".feedbacks__pagination",
+        clickable: true,
+    },
+
+    spaceBetween: 40,
+});
+
+// Forms
+
 const form = document.getElementById("form");
 let inputName = document.getElementById("name-input");
 let inputTel = document.getElementById("phone-input");
@@ -509,207 +620,10 @@ document.getElementById("price").oninput = function () {
     document.querySelector("#sum").textContent = amount + "  ₽";
 };
 
-// //range style for price
-// document.getElementById("price").oninput = function () {
-//     console.log(this.value);
-//     let creditTime = document.getElementById("month").value * 12;
-//     // this.style.background = 'linear-gradient(to right, #50DFB2 0%, #50DFB2 ' + valueLine + '%, #fff ' + valueLine + '%, white 100%)';
-//     let amount = this.value.replace(/(\d)(?=(\d{3})+$)/g, "$1 ");
-//     console.log(amount);
-//     this.previousElementSibling.setAttribute("value", amount + " ₽");
-//     console.log(this.value);
-//     //sum on changing
-//     document.getElementById("amount-1").textContent = Math.round(
-//         Number(this.value) *
-//             (persentPerMonth +
-//                 persentPerMonth /
-//                     (Math.pow(1 + persentPerMonth, creditTime) - 1))
-//     );
-//     document.getElementById("amount-1").textContent =
-//         document
-//             .getElementById("amount-1")
-//             .textContent.replace(/(\d)(?=(\d{3})+$)/g, "$1 ") + "  ₽";
-//     document.querySelector("#sum").textContent = amount + "  ₽";
-// };
-
-// document.getElementById("month-1").oninput = function () {
-//     let creditTime = document.getElementById("month-1").value * 12;
-//     // let valueLine = (this.value - this.min) / (this.max - this.min) * 100
-//     // this.style.background = 'linear-gradient(to right, #50DFB2 0%, #50DFB2 ' + valueLine + '%, #fff ' + valueLine + '%, white 100%)';
-//     if (this.value <= 4 || (this.value >= 21 && this.value <= 24)) {
-//         this.previousElementSibling.textContent = this.value + " год";
-//         document.querySelector("#time-1").textContent = this.value + " год";
-//     } else {
-//         this.previousElementSibling.textContent = this.value + " лет";
-//         document.querySelector("#time-1").textContent = this.value + " лет";
-//     }
-//     //sum on changing
-//     document.getElementById("amount-1-1").textContent = Math.round(
-//         Number(document.getElementById("price-1").value) *
-//             (persentPerMonth +
-//                 persentPerMonth /
-//                     (Math.pow(1 + persentPerMonth, creditTime) - 1))
-//     );
-//     document.getElementById("amount-1-1").textContent =
-//         document
-//             .getElementById("amount-1-1")
-//             .textContent.replace(/(\d)(?=(\d{3})+$)/g, "$1 ") + "  ₽";
-// };
-
-// //range style for price
-// document.getElementById("price-1").oninput = function () {
-//     let creditTime = document.getElementById("month-1").value * 12;
-//     // this.style.background = 'linear-gradient(to right, #50DFB2 0%, #50DFB2 ' + valueLine + '%, #fff ' + valueLine + '%, white 100%)';
-//     let amount = this.value.replace(/(\d)(?=(\d{3})+$)/g, "$1 ");
-//     this.previousElementSibling.value = amount + "  ₽";
-//     //sum on changing
-//     document.getElementById("amount-1-1").textContent = Math.round(
-//         Number(this.value) *
-//             (persentPerMonth +
-//                 persentPerMonth /
-//                     (Math.pow(1 + persentPerMonth, creditTime) - 1))
-//     );
-//     document.getElementById("amount-1-1").textContent =
-//         document
-//             .getElementById("amount-1-1")
-//             .textContent.replace(/(\d)(?=(\d{3})+$)/g, "$1 ") + "  ₽";
-//     console.log(amount);
-//     document.querySelector("#sum-1").innerHTML = amount + "  ₽";
-// };
-
-// document.getElementById("month-2").oninput = function () {
-//     let creditTime = document.getElementById("month-2").value * 12;
-//     // let valueLine = (this.value - this.min) / (this.max - this.min) * 100
-//     // this.style.background = 'linear-gradient(to right, #50DFB2 0%, #50DFB2 ' + valueLine + '%, #fff ' + valueLine + '%, white 100%)';
-//     if (this.value <= 4 || (this.value >= 21 && this.value <= 24)) {
-//         this.previousElementSibling.textContent = this.value + " год";
-//         document.querySelector("#time-2").textContent = this.value + " год";
-//     } else {
-//         this.previousElementSibling.textContent = this.value + " лет";
-//         document.querySelector("#time-2").textContent = this.value + " лет";
-//     }
-//     //sum on changing
-//     document.getElementById("amount-1-2").textContent = Math.round(
-//         Number(document.getElementById("price-2").value) *
-//             (persentPerMonth +
-//                 persentPerMonth /
-//                     (Math.pow(1 + persentPerMonth, creditTime) - 1))
-//     );
-//     document.getElementById("amount-1-2").textContent =
-//         document
-//             .getElementById("amount-1-2")
-//             .textContent.replace(/(\d)(?=(\d{3})+$)/g, "$1 ") + "  ₽";
-// };
-
-// //range style for price
-// document.getElementById("price-2").oninput = function () {
-//     let creditTime = document.getElementById("month-2").value * 12;
-//     // this.style.background = 'linear-gradient(to right, #50DFB2 0%, #50DFB2 ' + valueLine + '%, #fff ' + valueLine + '%, white 100%)';
-//     let amount = this.value.replace(/(\d)(?=(\d{3})+$)/g, "$1 ");
-//     this.previousElementSibling.value = amount + "  ₽";
-//     //sum on changing
-//     document.getElementById("amount-1-2").textContent = Math.round(
-//         Number(this.value) *
-//             (persentPerMonth +
-//                 persentPerMonth /
-//                     (Math.pow(1 + persentPerMonth, creditTime) - 1))
-//     );
-//     document.getElementById("amount-1-2").textContent =
-//         document
-//             .getElementById("amount-1-2")
-//             .textContent.replace(/(\d)(?=(\d{3})+$)/g, "$1 ") + "  ₽";
-//     document.querySelector("#sum-2").textContent = amount + "  ₽";
-// };
-
-// document.getElementById("input-3").oninput = function () {
-//     let creditTime = document.getElementById("month-2").value * 12;
-//     // this.style.background = 'linear-gradient(to right, #50DFB2 0%, #50DFB2 ' + valueLine + '%, #fff ' + valueLine + '%, white 100%)';
-//     let amount = this.value
-//         .replace(/(\d)(?=(\d{3})+$)/g, "$1 ")
-//         .replace(" ₽", "");
-//     this.previousElementSibling.value = amount + "  ₽";
-//     //sum on changing
-//     document.getElementById("amount-1-2").textContent = Math.round(
-//         Number(
-//             this.value
-//                 .replace(" ", "")
-//                 .replace("  ", "")
-//                 .replace(" ₽", "")
-//                 .replace(" ", "")
-//         ) *
-//             (persentPerMonth +
-//                 persentPerMonth /
-//                     (Math.pow(1 + persentPerMonth, creditTime) - 1))
-//     );
-//     document.getElementById("amount-1-2").textContent =
-//         document
-//             .getElementById("amount-1-2")
-//             .textContent.replace(/(\d)(?=(\d{3})+$)/g, "$1 ") + "  ₽";
-//     document.querySelector("#sum-2").textContent = amount + "  ₽";
-// };
-
-// document.getElementById("input-2").oninput = function () {
-//     let creditTime = document.getElementById("month-1").value * 12;
-//     // this.style.background = 'linear-gradient(to right, #50DFB2 0%, #50DFB2 ' + valueLine + '%, #fff ' + valueLine + '%, white 100%)';
-//     let amount = this.value
-//         .replace(/(\d)(?=(\d{3})+$)/g, "$1 ")
-//         .replace(" ₽", "");
-//     this.previousElementSibling.value = amount + "  ₽";
-//     //sum on changing
-//     document.getElementById("amount-1-1").textContent = Math.round(
-//         Number(
-//             this.value
-//                 .replace(" ", "")
-//                 .replace("  ", "")
-//                 .replace(" ₽", "")
-//                 .replace(" ", "")
-//         ) *
-//             (persentPerMonth +
-//                 persentPerMonth /
-//                     (Math.pow(1 + persentPerMonth, creditTime) - 1))
-//     );
-//     document.getElementById("amount-1-1").textContent =
-//         document
-//             .getElementById("amount-1-1")
-//             .textContent.replace(/(\d)(?=(\d{3})+$)/g, "$1 ") + "  ₽";
-//     document.querySelector("#sum-1").textContent = amount + "  ₽";
-// };
-
-// document.getElementById("input-1").oninput = function () {
-//     let creditTime = document.getElementById("month-1").value * 12;
-//     // this.style.background = 'linear-gradient(to right, #50DFB2 0%, #50DFB2 ' + valueLine + '%, #fff ' + valueLine + '%, white 100%)';
-//     let amount = this.value
-//         .replace(/(\d)(?=(\d{3})+$)/g, "$1 ")
-//         .replace(" ₽", "");
-//     this.previousElementSibling.value = amount + "  ₽";
-//     //sum on changing
-//     document.getElementById("amount-1").textContent = Math.round(
-//         Number(
-//             this.value
-//                 .replace(" ", "")
-//                 .replace("  ", "")
-//                 .replace(" ₽", "")
-//                 .replace(" ", "")
-//         ) *
-//             (persentPerMonth +
-//                 persentPerMonth /
-//                     (Math.pow(1 + persentPerMonth, creditTime) - 1))
-//     );
-//     document.getElementById("amount-1").textContent =
-//         document
-//             .getElementById("amount-1")
-//             .textContent.replace(/(\d)(?=(\d{3})+$)/g, "$1 ") + "  ₽";
-//     document.querySelector("#sum").textContent = amount + "  ₽";
-// };
-
-//data for copyright
-// let date = new Date();
-// let year = date.getFullYear();
-// document.querySelector(".footer__textt").innerHTML =
-//     "© Все права защищены 2005-" + year;
-
 //Phone MASK
+
 let phoneInput = document.getElementById("phone-input");
+let phoneInput2 = document.getElementById("phone-input-2");
 let getInputNumberValue = function (input) {
     return input.value.replace(/\D+/g, "");
 };
@@ -750,6 +664,10 @@ let onPhoneInput = function (e) {
 
 if (phoneInput) {
     phoneInput.addEventListener("input", onPhoneInput);
+}
+
+if (phoneInput2) {
+    phoneInput2.addEventListener("input", onPhoneInput);
 }
 
 // mail
@@ -890,91 +808,9 @@ function onSubmit(btn) {
     });
 }
 0;
-// let tasks = document.querySelectorAll(".tasks .swiper-slide");
-// tasks.forEach(function (item) {
-//     console.log(item.offsetHeight);
-//     // console.log(item.offsetParent)
-// });
-// let buttonProjectsToggler = document.querySelector(".link_project3 p");
-// buttonProjectsToggler.addEventListener("click", function (e) {
-//     console.log("1");
-//     let content = this.nextElementSibling;
-//     // console.log(clickedBtn.nextElementSibling)
-//     if (content.style.maxHeight) {
-//         //this is if the accordion is open
-//         content.style.maxHeight = null;
-//         content.classList.remove("is-open");
-//     } else {
-//         //if the accordion is currently closed
-//         content.style.maxHeight = content.scrollHeight + "px";
-//         content.classList.add("is-open");
-//     }
-// });
-// let buttonProjectsToggler2 = document.querySelector(".mini-acc");
-// buttonProjectsToggler2.addEventListener("click", function (e) {
-//     console.log("1");
-//     let content = this.nextElementSibling;
-//     console.log(this.nextElementSibling);
-//     if (content.style.maxHeight) {
-//         //this is if the accordion is open
-//         content.style.maxHeight = null;
-//         content.classList.remove("is-open");
-//     } else {
-//         //if the accordion is currently closed
-//         content.style.maxHeight = content.scrollHeight + "px";
-//         content.classList.add("is-open");
-//     }
-// });
-// let calculatorInputRange = document.querySelectorAll(
-//     ".calculator-input__range"
-// );
-// $(".calculator-input__range").on("change input", function () {
-//     $(this).parent().find($("input[name=values]")).val($(this).val()); //assign value..
 
-//     let width = ($(this).val() / $(this).attr("max")) * 100 + "%";
-//     let fill = $(this).parent().find(".range-fill");
-//     if ($(this).val() == 1) {
-//         fill.width(width);
-//     } else {
-//         fill.width(width);
-//     }
-// });
-
-// $(".calculator-input__sum").on("input", function () {
-//     let value = $(this).val();
-//     let n1 = value.replace(" ", "");
-//     let n2 = n1.replace("  ", "");
-//     let n3 = n2.replace(" ₽", "");
-//     let n4 = n3.replace(" ", "");
-
-//     if (isNaN(value)) {
-//         value = 1;
-//     }
-//     if ($(this).val() === "") {
-//         $(this).parent().find("input[type=range]").val(0);
-//     } else {
-//         $(this).parent().find("input[type=range]").attr("value", value);
-//     }
-//     if ($(this).parent().find("input[type=range]")) {
-//         $(this).parent().find("input[type=range]").attr("value", n4);
-//         let width =
-//             (+$(this).parent().find("input[type=range]").attr("value") /
-//                 +$(this).attr("max")) *
-//                 100 +
-//             "%";
-//         let fill = $(this).parent().find(".range-fill");
-//         if ($(this).val() == 1) {
-//             fill.width(width);
-//         } else {
-//             fill.width(width);
-//         }
-//     }
-// });
-
-// $(":input").inputmask({
-//     max: 25000000,
-// });
 $("#phone-input").inputmask("+7 999 999-99-99");
+$("#phone-input-2").inputmask("+7 999 999-99-99");
 
 $("#submit-button").click(function (e) {
     e.preventDefault();
@@ -1013,99 +849,4 @@ $("#submit-button").click(function (e) {
             alert("error");
         },
     });
-});
-
-// Sliders
-
-let slidePerViewNum = 4;
-let windowWidth = document.documentElement.offsetWidth;
-
-if (windowWidth < 1250 && windowWidth >= 1100) {
-    slidePerViewNum = 3;
-} else if (windowWidth < 1100 && windowWidth >= 900) {
-    slidePerViewNum = 2;
-} else if (windowWidth < 900) {
-    slidePerViewNum = 1;
-}
-
-if (windowWidth < 600) {
-    document
-        .querySelector(".achivements-1__items-wrapper")
-        .classList.add("swiper");
-    document
-        .querySelector(".achivements-1__items")
-        .classList.add("swiper-wrapper");
-    document
-        .querySelectorAll(".achivement")
-        .forEach((item) => item.classList.add("swiper-slide"));
-    document.querySelector(".companies__items-wrapper").classList.add("swiper");
-    document.querySelector(".companies__items").classList.add("swiper-wrapper");
-    document
-        .querySelectorAll(".companies__item-wrapper")
-        .forEach((item) => item.classList.add("swiper-slide"));
-
-    const swiperThree = new Swiper(".achivements-1__items-wrapper", {
-        slidesPerView: 1.3,
-        spaceBetween: 10,
-        direction: "horizontal",
-        // spaceBetween: 40,
-    });
-
-}
-
-const swiperOne = new Swiper(".certificates__slider", {
-    slidesPerView: 1,
-    direction: "horizontal",
-    loop: true,
-    // pagination: {
-    //     el: ".certificates__pagination",
-    //     clickable: true,
-
-    // },
-    autoplay: {
-        delay: 300,
-    },
-    //   effect: "fade",
-    breakpoints: {
-        600: {
-            slidesPerView: 3,
-            spaceBetween: 10,
-        },
-    },
-});
-document.querySelector(".tasks__items-wrapper").classList.add("swiper");
-    document.querySelector(".tasks__items").classList.add("swiper-wrapper");
-    document
-        .querySelectorAll(".task")
-        .forEach((item) => item.classList.add("swiper-slide"));
-
-const swiperFour = new Swiper(".tasks__items-wrapper", {
-    slidesPerView: 1,
-    direction: "horizontal",
-    spaceBetween: 40,
-    pagination: {
-        el: ".pag",
-        clickable: true,
-    },
-    breakpoints: {
-        1000: {
-            slidesPerView: 2,
-        },
-    },
-});
-
-const feedbackSlides = document.querySelectorAll(".feedback");
-const feedbackPagination = document.querySelector(".feedbacks__pagination");
-const feedbackWrapper = document.querySelector(".feedbacks__slider-wrapper");
-
-const swiperTwo = new Swiper(".feedbacks__slider", {
-    slidesPerView: 1,
-    direction: "horizontal",
-    centeredSlides: true,
-    pagination: {
-        el: ".feedbacks__pagination",
-        clickable: true,
-    },
-
-    spaceBetween: 40,
 });
