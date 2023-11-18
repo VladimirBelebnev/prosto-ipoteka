@@ -703,10 +703,10 @@ document.getElementById("price").oninput = function () {
 // };
 
 //data for copyright
-let date = new Date();
-let year = date.getFullYear();
-document.querySelector(".footer__textt").innerHTML =
-    "© Все права защищены 2005-" + year;
+// let date = new Date();
+// let year = date.getFullYear();
+// document.querySelector(".footer__textt").innerHTML =
+//     "© Все права защищены 2005-" + year;
 
 //Phone MASK
 let phoneInput = document.getElementById("phone-input");
